@@ -1,18 +1,20 @@
-function move_count(r,side,count)
-    for i in 1:count
-        if isborder(r,Nord) == false
+"""
+main(r::Robot)
+Функция ищет проход под горизонтальной перегородкой, и робот 
+останавливается под проходом.
+"""
+function main(r::Robot)
+    count = 1
+    while true
+        movement(r, West, count, false)
+        if isborder(r, Nord) == false
             break
         end
-        move!(r,side)
-    end
-end
-
-function main(r)
-    count = 1
-    while isborder(r,Nord)==true
-        move_count(r,West,count)
-        move_count(r,Ost,count*2)
-        move_count(r,West,count)
+        movement(r, Ost, count*2, false)
+        if isborder(r, Nord) == false
+            break
+        end
+        movement(r, West, count, false)
         count += 1
     end
 end
